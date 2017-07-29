@@ -13,7 +13,6 @@ Redmine::Plugin.register :redmine_emojibutton do
 end
 
 Rails.configuration.to_prepare do
-  Rails.configuration.assets.paths << Emoji.images_path
 
   # send Emoji Patches to all wiki formatters available to be able to switch formatter without app restart
   Redmine::WikiFormatting::format_names.each do |format|
@@ -27,7 +26,7 @@ Rails.configuration.to_prepare do
         Redmine::WikiFormatting::Textile::Formatter.send(:include, EmojiButtonPlugin::Formatter::Textile::Patch)
       end
     end
-    
+
     unless Redmine::WikiFormatting::helper_for(format).included_modules.include? EmojiButtonPlugin::Helper::Patch
      Redmine::WikiFormatting::helper_for(format).send(:include, EmojiButtonPlugin::Helper::Patch)
     end
